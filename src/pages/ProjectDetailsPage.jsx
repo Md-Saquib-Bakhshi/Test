@@ -139,14 +139,10 @@ function ProjectDetailsPage() {
 
       <main style={{ paddingTop: "4rem" }}>
         <div className="container py-8">
-          {/* Header */}
+          {/* Header with Back Button */}
           <div className="flex items-center mb-8">
-            <button
-              onClick={() => navigate("/dashboard")}
-              className="flex items-center text-teal hover:text-teal transition-colors mr-4"
-              style={{ color: "#006b64" }}
-            >
-              <ArrowLeft size={20} className="mr-1" />
+            <button onClick={() => navigate("/dashboard")} className="back-button">
+              <ArrowLeft size={18} /> {/* Slightly smaller icon */}
               Back to Dashboard
             </button>
           </div>
@@ -243,14 +239,14 @@ function ProjectDetailsPage() {
                         </div>
                       </div>
 
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-1"> {/* Adjusted space-x for icon buttons */}
                         {/* Preview Button */}
                         <button
                           onClick={() => {
                             setSelectedResume(resume)
                             setIsPreviewModalOpen(true)
                           }}
-                          className="p-2 text-gray-400 hover:text-teal transition-colors"
+                          className="resume-action-btn" // Using the new class
                           title="Preview"
                         >
                           <Eye size={16} />
@@ -260,21 +256,21 @@ function ProjectDetailsPage() {
                         <div className="relative">
                           <button
                             onClick={() => setActiveDropdown(activeDropdown === resume.id ? null : resume.id)}
-                            className="flex items-center space-x-1 p-2 text-gray-400 hover:text-teal transition-colors"
+                            className="resume-action-btn flex items-center" // Using the new class
+                            title="Download"
                           >
                             <Download size={16} />
-                            <ChevronDown size={12} />
+                            <ChevronDown size={12} className="ml-1" /> {/* Added margin for icon */}
                           </button>
 
                           {activeDropdown === resume.id && (
                             <div
-                              className="absolute right-0 mt-1 w-32 bg-white rounded-md shadow-lg border z-10"
-                              style={{ borderColor: "#e5e7eb" }}
+                              className="dropdown-menu" // Ensure this class is used
                             >
-                              <button className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                              <button className="dropdown-item"> {/* Ensure this class is used */}
                                 Download PDF
                               </button>
-                              <button className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                              <button className="dropdown-item"> {/* Ensure this class is used */}
                                 Download DOCX
                               </button>
                             </div>
@@ -287,7 +283,7 @@ function ProjectDetailsPage() {
                             setSelectedResume(resume)
                             setIsEditModalOpen(true)
                           }}
-                          className="p-2 text-gray-400 hover:text-teal transition-colors"
+                          className="resume-action-btn" // Using the new class
                           title="Edit"
                         >
                           <Edit size={16} />
@@ -296,28 +292,10 @@ function ProjectDetailsPage() {
                         {/* Accept/Reject Buttons */}
                         {resume.score < project.threshold && resume.status === "pending" && (
                           <div className="flex space-x-2 ml-4">
-                            <button
-                              onClick={() => handleResumeAction(resume.id, "accept")}
-                              className="px-3 py-1 rounded-md transition-colors text-sm"
-                              style={{
-                                backgroundColor: "#dcfce7",
-                                color: "#166534",
-                              }}
-                              onMouseEnter={(e) => (e.target.style.backgroundColor = "#bbf7d0")}
-                              onMouseLeave={(e) => (e.target.style.backgroundColor = "#dcfce7")}
-                            >
+                            <button onClick={() => handleResumeAction(resume.id, "accept")} className="resume-accept-btn">
                               Accept
                             </button>
-                            <button
-                              onClick={() => handleResumeAction(resume.id, "reject")}
-                              className="px-3 py-1 rounded-md transition-colors text-sm"
-                              style={{
-                                backgroundColor: "#fee2e2",
-                                color: "#991b1b",
-                              }}
-                              onMouseEnter={(e) => (e.target.style.backgroundColor = "#fecaca")}
-                              onMouseLeave={(e) => (e.target.style.backgroundColor = "#fee2e2")}
-                            >
+                            <button onClick={() => handleResumeAction(resume.id, "reject")} className="resume-reject-btn">
                               Reject
                             </button>
                           </div>
@@ -371,13 +349,7 @@ function ProjectDetailsPage() {
             <div className="flex justify-between pt-4">
               <button
                 onClick={() => handleDeleteResume(selectedResume.id)}
-                className="flex items-center space-x-2 px-4 py-2 rounded-md transition-colors"
-                style={{
-                  backgroundColor: "#fee2e2",
-                  color: "#991b1b",
-                }}
-                onMouseEnter={(e) => (e.target.style.backgroundColor = "#fecaca")}
-                onMouseLeave={(e) => (e.target.style.backgroundColor = "#fee2e2")}
+                className="resume-reject-btn flex items-center space-x-2" // Re-using existing reject style for delete
               >
                 <Trash2 size={16} />
                 <span>Delete</span>
